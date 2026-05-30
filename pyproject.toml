@@ -1,0 +1,11 @@
+[project]
+name = "mdfetch"
+version = "0.1.0"
+description = "Fetch web pages and convert them to markdown"
+requires-python = ">=3.10"
+
+dependencies = [
+    "requests",
+    "beautifulsoup4",
+    "html2text"
+]
