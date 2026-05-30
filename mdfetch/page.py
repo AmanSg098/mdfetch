@@ -14,8 +14,24 @@ class Page:
         soup = BeautifulSoup(self.html, "html.parser")
         return soup.get_text(separator="\n", strip=True)
 
-    def markdown(self):
+    def markdown(self, exclude=None, include=None):
         converter = html2text.HTML2Text()
         converter.ignore_links = False
 
-        return converter.handle(self.html)
+        soup = BeautifulSoup(self.html, "html.parser")
+
+        if exclude:
+            for tag in exclude:
+                for element in soup.find_all(tag):
+                    element.decompose()
+
+        if include:
+            html = ""
+            for tag in include:
+                for element in soup.find_all(tag):
+                    html += str(element)
+        else:
+            html = str(soup)
+
+        return converter.handle(html)
+
