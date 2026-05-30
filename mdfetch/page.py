@@ -1,5 +1,6 @@
 # page.py
 from bs4 import BeautifulSoup
+import html2text
 
 
 class Page:
@@ -12,3 +13,9 @@ class Page:
     def text(self):
         soup = BeautifulSoup(self.html, "html.parser")
         return soup.get_text(separator="\n", strip=True)
+
+    def markdown(self):
+        converter = html2text.HTML2Text()
+        converter.ignore_links = False
+
+        return converter.handle(self.html)
