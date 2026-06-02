@@ -1,6 +1,7 @@
 # page.py
 from bs4 import BeautifulSoup
 import html2text
+from urllib.parse import urljoin
 
 
 class Page:
@@ -34,4 +35,24 @@ class Page:
             html = str(soup)
 
         return converter.handle(html)
+    
+    def links(self, skip_empty: bool = False):
+        soup = BeautifulSoup(self.html, "html.parser")
+
+        links: list[dict] = []
+
+        for a in soup.find_all("a", href=True):
+            text = a.get_text(strip=True)
+
+            if skip_empty and not text:
+                continue
+
+            links.append(
+                {
+                    "url": urljoin(self.url, a["href"]),
+                    "text": text,
+                }
+            )
+
+        return links
 
