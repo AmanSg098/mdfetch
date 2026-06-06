@@ -36,20 +36,27 @@ class Page:
 
         return converter.handle(html)
     
-    def links(self, skip_empty: bool = False):
+    def links(self, skip_empty: bool = False, unique: bool = False):
         soup = BeautifulSoup(self.html, "html.parser")
 
-        links: list[dict] = []
+        links = []
+        seen = set()
 
         for a in soup.find_all("a", href=True):
+            url = urljoin(self.url, a["href"])
             text = a.get_text(strip=True)
 
             if skip_empty and not text:
                 continue
 
+            if unique:
+                if url in seen:
+                    continue
+                seen.add(url)
+
             links.append(
                 {
-                    "url": urljoin(self.url, a["href"]),
+                    "url": url,
                     "text": text,
                 }
             )
