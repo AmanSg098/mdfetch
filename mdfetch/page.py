@@ -11,11 +11,20 @@ class Page:
         self.status_code = status_code
         self.headers = headers
 
-    def text(self):
+    def text(self, selector: str | None = None):
         soup = BeautifulSoup(self.html, "html.parser")
+
+        if selector:
+            elements = soup.select(selector)
+
+            return "\n".join(
+                element.get_text(separator="\n", strip=True)
+                for element in elements
+            )
+
         return soup.get_text(separator="\n", strip=True)
 
-    def markdown(self, exclude=None, include=None):
+    def markdown(self, exclude=None, include=None, selector: str | None = None):
         converter = html2text.HTML2Text()
         converter.ignore_links = False
 
@@ -26,11 +35,18 @@ class Page:
                 for element in soup.find_all(tag):
                     element.decompose()
 
-        if include:
+        if selector:
+            html = "".join(
+                str(element)
+                for element in soup.select(selector)
+            )
+
+        elif include:
             html = ""
             for tag in include:
                 for element in soup.find_all(tag):
                     html += str(element)
+
         else:
             html = str(soup)
 
