@@ -12,6 +12,9 @@ A lightweight Python library for fetching web pages and extracting content as Ma
 * Include only specific HTML tags before processing
 * Support for custom request headers and timeouts
 * Automatic resolution of relative URLs
+* CSS selector support
+* Optional link deduplication
+* Automatic retry handling
 
 ## Installation
 
@@ -134,6 +137,57 @@ page = mdfetch.fetch("https://example.com")
 links = page.links(skip_empty=True)
 ```
 
+## Extract Content Using CSS Selectors
+
+Target specific elements using CSS selectors.
+
+```python
+page = mdfetch.fetch("https://example.com")
+
+markdown = page.markdown(
+    selector="article"
+)
+
+print(markdown)
+```
+
+You can use any valid CSS selector:
+
+```python
+page.markdown(selector=".content")
+page.markdown(selector="#main")
+page.markdown(selector="article.post")
+```
+
+## Extract Text Using CSS Selectors
+
+Extract plain text from specific sections of a page.
+
+```python
+page = mdfetch.fetch("https://example.com")
+
+text = page.text(
+    selector=".content"
+)
+
+print(text)
+```
+
+## Extract Unique Links
+
+Remove duplicate URLs from the extracted links.
+
+```python
+page = mdfetch.fetch("https://example.com")
+
+links = page.links(
+    unique=True
+)
+
+print(links)
+```
+
+
 ## Roadmap
 
 Planned features:
@@ -141,9 +195,6 @@ Planned features:
 * Async support via httpx
 * curl_cffi backend
 * Proxy support
-* Retry handling
-* Link deduplication
-* CSS selector support
 * Metadata extraction
 
 ## License

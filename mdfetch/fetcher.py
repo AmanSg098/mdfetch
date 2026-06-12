@@ -5,6 +5,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 from .page import Page
+from .exceptions import FetchError
 
 
 def fetch(
@@ -16,6 +17,7 @@ def fetch(
     params: dict | None = None,
     retries: int = 3,
 ):
+
     session = requests.Session()
 
     retry_strategy = Retry(
@@ -28,19 +30,23 @@ def fetch(
         max_retries=retry_strategy
     )
 
-
     session.mount("http://", adapter)
     session.mount("https://", adapter)
 
-    response = session.get(
-        url,
-        timeout=timeout,
-        headers=headers,
-        cookies=cookies,
-        proxies=proxies,
-        params=params,
-    )
+    try:
+        response = session.get(
+            url,
+            timeout=timeout,
+            headers=headers,
+            cookies=cookies,
+            proxies=proxies,
+            params=params,
+        )
+        response.raise_for_status()
 
+    except requests.RequestException as e:
+        raise FetchError(f"Failed to fetch {url}: {e}") from e
+    
     return Page(
         url=response.url,
         html=response.text,
