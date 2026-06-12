@@ -5,6 +5,10 @@ from urllib.parse import urljoin
 
 
 class Page:
+    """
+    Represents a fetched web page and provides
+    methods for extracting content.
+    """
     def __init__(self, url: str, html: str, status_code: int, headers: dict):
         self.url = url
         self.html = html
@@ -12,6 +16,15 @@ class Page:
         self.headers = headers
 
     def text(self, selector: str | None = None):
+        """
+        Extract plain text from the page.
+
+        Args:
+            selector: Optional CSS selector.
+
+        Returns:
+            str: Extracted text.
+        """
         soup = BeautifulSoup(self.html, "html.parser")
 
         if selector:
@@ -25,6 +38,17 @@ class Page:
         return soup.get_text(separator="\n", strip=True)
 
     def markdown(self, exclude=None, include=None, selector: str | None = None):
+        """
+        Convert page content to Markdown.
+
+        Args:
+            exclude: Tags to remove before conversion.
+            include: Tags to include before conversion.
+            selector: CSS selector to target content.
+
+        Returns:
+            str: Markdown content.
+        """
         converter = html2text.HTML2Text()
         converter.ignore_links = False
 
@@ -53,6 +77,16 @@ class Page:
         return converter.handle(html)
     
     def links(self, skip_empty: bool = False, unique: bool = False):
+        """
+        Extract links from the page.
+
+        Args:
+            skip_empty: Skip links without text.
+            unique: Remove duplicate URLs.
+
+        Returns:
+            list[dict]: Extracted links.
+        """
         soup = BeautifulSoup(self.html, "html.parser")
 
         links = []

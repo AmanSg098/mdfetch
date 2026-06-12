@@ -18,6 +18,25 @@ def fetch(
     retries: int = 3,
 ):
 
+    """
+    Fetch a web page and return a Page object.
+
+    Args:
+        url: Target URL.
+        timeout: Request timeout in seconds.
+        headers: Optional request headers.
+        cookies: Optional request cookies.
+        proxies: Optional proxy configuration.
+        params: Optional query parameters.
+        retries: Number of retry attempts.
+
+    Returns:
+        Page: A Page object containing the response data.
+
+    Raises:
+        FetchError: If the request fails.
+    """
+
     session = requests.Session()
 
     retry_strategy = Retry(
