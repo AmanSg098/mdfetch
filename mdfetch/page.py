@@ -15,7 +15,10 @@ class Page:
         self.status_code = status_code
         self.headers = headers
 
-    def text(self, selector: str | None = None):
+    def text(
+        self,
+        selector: str | None = None,
+    ) -> str:
         """
         Extract plain text from the page.
 
@@ -37,7 +40,12 @@ class Page:
 
         return soup.get_text(separator="\n", strip=True)
 
-    def markdown(self, exclude=None, include=None, selector: str | None = None):
+    def markdown(
+        self,
+        exclude: list[str] | None = None,
+        include: list[str] | None = None,
+        selector: str | None = None,
+    ) -> str:
         """
         Convert page content to Markdown.
 
@@ -76,7 +84,11 @@ class Page:
 
         return converter.handle(html)
     
-    def links(self, skip_empty: bool = False, unique: bool = False):
+    def links(
+        self,
+        skip_empty: bool = False,
+        unique: bool = False,
+    ) -> list[dict[str, str]]:
         """
         Extract links from the page.
 
