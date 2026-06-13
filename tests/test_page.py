@@ -1,18 +1,18 @@
-import mdfetch
+import markdfetch
 import pytest
-from mdfetch import fetch
-from mdfetch.exceptions import FetchError
+from markdfetch import fetch
+from markdfetch.exceptions import FetchError
 
 
 def test_fetch():
-    page = mdfetch.fetch("https://example.com")
+    page = markdfetch.fetch("https://example.com")
 
     assert page.status_code == 200
     assert "Example Domain" in page.html
 
 
 def test_text():
-    page = mdfetch.fetch("https://example.com")
+    page = markdfetch.fetch("https://example.com")
 
     text = page.text()
 
@@ -20,7 +20,7 @@ def test_text():
 
 
 def test_markdown():
-    page = mdfetch.fetch("https://example.com")
+    page = markdfetch.fetch("https://example.com")
 
     md = page.markdown()
 
@@ -28,7 +28,7 @@ def test_markdown():
 
 
 def test_links():
-    page = mdfetch.fetch("https://example.com")
+    page = markdfetch.fetch("https://example.com")
 
     links = page.links()
 

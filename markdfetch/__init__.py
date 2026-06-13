@@ -1,10 +1,10 @@
 # __init__.py
 from .fetcher import fetch
-from .exceptions import MDFetchError, FetchError
+from .exceptions import MarkDFetchError, FetchError
 
 __all__ = [
     "fetch",
-    "MDFetchError",
+    "MarkDFetchError",
     "FetchError",
 ]
 

@@ -29,7 +29,7 @@ def fetch(
         FetchError: If the request fails.
 
     Examples:
-        page = mdfetch.fetch(
+        page = markdfetch.fetch(
             "https://example.com",
             timeout=30,
             headers={"User-Agent": "Mozilla/5.0"},

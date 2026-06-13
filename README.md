@@ -1,4 +1,4 @@
-# mdfetch
+# markdfetch
 
 A lightweight Python library for fetching web pages and extracting content as Markdown, plain text, or structured links.
 
@@ -19,15 +19,15 @@ A lightweight Python library for fetching web pages and extracting content as Ma
 ## Installation
 
 ```bash
-pip install mdfetch
+pip install markdfetch
 ```
 
 ## Quick Start
 
 ```python
-import mdfetch
+import markdfetch
 
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 print(page.markdown())
 ```
@@ -35,9 +35,9 @@ print(page.markdown())
 ## Fetch a Page
 
 ```python
-import mdfetch
+import markdfetch
 
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 print(page.status_code)
 print(page.url)
@@ -46,7 +46,7 @@ print(page.url)
 ## Convert HTML to Markdown
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 markdown = page.markdown()
 
@@ -58,7 +58,7 @@ print(markdown)
 Remove unwanted sections before converting to Markdown.
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 markdown = page.markdown(
     exclude=["nav", "footer"]
@@ -72,7 +72,7 @@ print(markdown)
 Extract content only from selected tags.
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 markdown = page.markdown(
     include=["article"]
@@ -84,7 +84,7 @@ print(markdown)
 ## Combine Include and Exclude
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 markdown = page.markdown(
     include=["article"],
@@ -97,7 +97,7 @@ print(markdown)
 ## Extract Plain Text
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 text = page.text()
 
@@ -107,7 +107,7 @@ print(text)
 ## Extract Links
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 links = page.links()
 
@@ -132,7 +132,7 @@ Example output:
 ## Skip Empty Links
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 links = page.links(skip_empty=True)
 ```
@@ -142,7 +142,7 @@ links = page.links(skip_empty=True)
 Target specific elements using CSS selectors.
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 markdown = page.markdown(
     selector="article"
@@ -164,7 +164,7 @@ page.markdown(selector="article.post")
 Extract plain text from specific sections of a page.
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 text = page.text(
     selector=".content"
@@ -178,7 +178,7 @@ print(text)
 Remove duplicate URLs from the extracted links.
 
 ```python
-page = mdfetch.fetch("https://example.com")
+page = markdfetch.fetch("https://example.com")
 
 links = page.links(
     unique=True
