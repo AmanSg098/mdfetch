@@ -193,7 +193,6 @@ print(links)
 Planned features:
 
 * Async support via httpx
-* curl_cffi backend
 * Proxy support
 * Metadata extraction
 

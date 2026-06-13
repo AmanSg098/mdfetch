@@ -10,12 +10,8 @@ from .exceptions import FetchError
 
 def fetch(
     url: str,
-    timeout: int = 30,
-    headers: dict | None = None,
-    cookies: dict | None = None,
-    proxies: dict | None = None,
-    params: dict | None = None,
     retries: int = 3,
+    **kwargs
 ):
 
     """
@@ -23,20 +19,22 @@ def fetch(
 
     Args:
         url: Target URL.
-        timeout: Request timeout in seconds.
-        headers: Optional request headers.
-        cookies: Optional request cookies.
-        proxies: Optional proxy configuration.
-        params: Optional query parameters.
         retries: Number of retry attempts.
+        **kwargs: Additional arguments passed directly to requests.Session.get().
 
     Returns:
         Page: A Page object containing the response data.
 
     Raises:
         FetchError: If the request fails.
-    """
 
+    Examples:
+        page = mdfetch.fetch(
+            "https://example.com",
+            timeout=30,
+            headers={"User-Agent": "Mozilla/5.0"},
+        )
+    """
     session = requests.Session()
 
     retry_strategy = Retry(
@@ -55,11 +53,7 @@ def fetch(
     try:
         response = session.get(
             url,
-            timeout=timeout,
-            headers=headers,
-            cookies=cookies,
-            proxies=proxies,
-            params=params,
+            **kwargs,
         )
         response.raise_for_status()
 

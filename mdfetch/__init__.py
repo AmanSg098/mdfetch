@@ -7,3 +7,5 @@ __all__ = [
     "MDFetchError",
     "FetchError",
 ]
+
+__version__ = "0.1.0"
